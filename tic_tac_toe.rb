@@ -1,10 +1,9 @@
 class Game
   def initialize
+    @positions = [0, 1, 2, 3, 4, 5, 6, 7, 8]
     #create_players
     display_board
   end
-
-  POSITIONS = ["_", "_", "_", "_", "_", "_", " ", " ", " "]
 
   def create_players
     get_name(1)
@@ -22,14 +21,14 @@ class Game
 
   def get_symbol
     puts "#{@name.capitalize}, choose your symbol (X or O):"
-    @symbol = gets.chomp
+    @symbol = gets.chomp.capitalize
   end
 
   def assign_symbol
-    if @player1.symbol.downcase == "x"
-      @symbol = "o"
+    if @player1.symbol == "X"
+      @symbol = "O"
     else
-      @symbol = "x"
+      @symbol = "X"
     end
   end
 
@@ -38,9 +37,15 @@ class Game
   end
 
   def display_board
-    puts "#{POSITIONS[0]}|#{POSITIONS[1]}|#{POSITIONS[2]}"
-    puts "#{POSITIONS[3]}|#{POSITIONS[4]}|#{POSITIONS[5]}"
-    puts "#{POSITIONS[6]}|#{POSITIONS[7]}|#{POSITIONS[8]}"
+    puts " #{@positions[0]} | #{@positions[1]} | #{@positions[2]} "
+    puts "-----------"
+    puts " #{@positions[3]} | #{@positions[4]} | #{@positions[5]} "
+    puts "-----------"
+    puts " #{@positions[6]} | #{@positions[7]} | #{@positions[8]} "
+  end
+
+  def game_won?
+
   end
 end
 
