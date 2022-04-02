@@ -1,7 +1,10 @@
 class Game
   def initialize
-    create_players
+    #create_players
+    display_board
   end
+
+  POSITIONS = ["_", "_", "_", "_", "_", "_", " ", " ", " "]
 
   def create_players
     get_name(1)
@@ -28,6 +31,16 @@ class Game
     else
       @symbol = "x"
     end
+  end
+
+  def randomize_turn
+    rand(2)
+  end
+
+  def display_board
+    puts "#{POSITIONS[0]}|#{POSITIONS[1]}|#{POSITIONS[2]}"
+    puts "#{POSITIONS[3]}|#{POSITIONS[4]}|#{POSITIONS[5]}"
+    puts "#{POSITIONS[6]}|#{POSITIONS[7]}|#{POSITIONS[8]}"
   end
 end
 
