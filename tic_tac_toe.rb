@@ -1,9 +1,11 @@
 class Game
   def initialize
     @positions = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-    #create_players
+    create_players
     display_board
   end
+
+  WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
 
   def create_players
     get_name(1)
@@ -45,7 +47,23 @@ class Game
   end
 
   def game_won?
+    WINNING_COMBINATIONS.each do |combo|
+      if (@positions[combo[0]] == "X" && @positions[combo[1]] == "X" && @positions[combo[2]] == "X")
+        puts "#{winner} wins."
+        return true
+      elsif (@positions[combo[0]] == "O" && @positions[combo[1]] == "O" && @positions[combo[2]] == "O")
+        puts "#{winner} wins."
+        return true
+      end
+    end
+  end
 
+  def winner
+    if @player1.symbol == "X"
+      @player1.name
+    elsif @player2.symbol == "X"
+      @player2.name
+    end
   end
 end
 
@@ -55,7 +73,7 @@ class Player
   def initialize(name, symbol)
     @name = name
     @symbol = symbol
-    puts "New player created, #{name}, #{symbol}"
+    puts "#{name.capitalize} will be #{symbol}."
   end
 end
 
