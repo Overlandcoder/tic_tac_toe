@@ -2,26 +2,26 @@ class Game
   def initialize
     @positions = [0, 1, 2, 3, 4, 5, 6, 7, 8]
     create_players
-    display_board
+    play_game
   end
 
   WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
 
   def create_players
-    get_name(1)
-    get_symbol
+    choose_name(1)
+    choose_symbol
     @player1 = Player.new(@name, @symbol)
-    get_name(2)
+    choose_name(2)
     assign_symbol
     @player2 = Player.new(@name, @symbol)
   end
 
-  def get_name(player_number)
+  def choose_name(player_number)
     puts "Player #{player_number}, enter your name:"
     @name = gets.chomp
   end
 
-  def get_symbol
+  def choose_symbol
     puts "#{@name.capitalize}, choose your symbol (X or O):"
     @symbol = gets.chomp.capitalize
   end
@@ -34,8 +34,8 @@ class Game
     end
   end
 
-  def randomize_turn
-    rand(2)
+  def first_turn
+    puts [@player1.name, @player2.name].sample
   end
 
   def display_board
@@ -44,6 +44,17 @@ class Game
     puts " #{@positions[3]} | #{@positions[4]} | #{@positions[5]} "
     puts "-----------"
     puts " #{@positions[6]} | #{@positions[7]} | #{@positions[8]} "
+  end
+
+  def play_game
+    until game_won?
+      display_board
+      solicit_move
+    end
+  end
+
+  def solicit_move
+    puts ""
   end
 
   def game_won?
@@ -58,6 +69,10 @@ class Game
     end
   end
 
+  def game_tied?
+
+  end
+
   def winner
     if @player1.symbol == "X"
       @player1.name
@@ -68,7 +83,7 @@ class Game
 end
 
 class Player
-  attr_reader :symbol
+  attr_reader :name, :symbol
 
   def initialize(name, symbol)
     @name = name
