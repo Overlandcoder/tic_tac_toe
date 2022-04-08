@@ -1,11 +1,12 @@
 class Game
 attr_reader :current_player, :player1, :player2, :symbol
 
+WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
 
   def initialize
     @positions = [0, 1, 2, 3, 4, 5, 6, 7, 8]
     create_players
-    first_turn
+    randomize_first_turn
     play_game
   end
 
@@ -40,7 +41,7 @@ attr_reader :current_player, :player1, :player2, :symbol
     puts "\n#{player2.name} will be #{player2.symbol}."
   end
 
-  def first_turn
+  def randomize_first_turn
     @current_player = [player1, player2].sample
   end
 
@@ -72,8 +73,6 @@ attr_reader :current_player, :player1, :player2, :symbol
       mark(@move)
     end
   end
-
-  WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
 
   def game_won?
     WINNING_COMBINATIONS.each do |combo|
