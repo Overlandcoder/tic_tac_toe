@@ -108,7 +108,7 @@ WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [
   end
 
   def valid_move?
-    return true if @positions[@move].is_a? Integer
+    return true if @positions[@move-1].is_a? Integer
   end
 
   def display_board
