@@ -21,11 +21,11 @@ attr_reader :current_player, :player1, :player2, :symbol
 
   def choose_name(player_number)
     puts "Player #{player_number}, enter your name:"
-    @name = gets.chomp
+    @name = gets.chomp.capitalize
   end
 
   def choose_symbol
-    puts "#{@name.capitalize}, choose your symbol (X or O):"
+    puts "#{@name}, choose your symbol (X or O):"
     @symbol = gets.chomp.capitalize
     if symbol != "X" && symbol != "O"
       puts "Invalid symbol."
@@ -50,7 +50,7 @@ attr_reader :current_player, :player1, :player2, :symbol
   end
 
   def play_game
-    until game_won?
+    until game_over?
       display_board
       solicit_move
       mark(@move)
@@ -59,7 +59,7 @@ attr_reader :current_player, :player1, :player2, :symbol
   end
 
   def solicit_move
-    puts "\n#{current_player.name.capitalize}, it's your turn to make a move."
+    puts "\n#{current_player.name}, it's your turn to make a move."
     @move = gets.chomp.to_i
   end
 
@@ -70,10 +70,10 @@ attr_reader :current_player, :player1, :player2, :symbol
   def game_won?
     WINNING_COMBINATIONS.each do |combo|
       if (@positions[combo[0]] == "X" && @positions[combo[1]] == "X" && @positions[combo[2]] == "X")
-        puts "#{current_player.name.capitalize} wins."
+        puts "#{current_player.name} wins."
         return true
       elsif (@positions[combo[0]] == "O" && @positions[combo[1]] == "O" && @positions[combo[2]] == "O")
-        puts "#{current_player.name.capitalize} wins."
+        puts "#{current_player.name} wins."
         return true
       end
     end
@@ -81,6 +81,11 @@ attr_reader :current_player, :player1, :player2, :symbol
   end
 
   def game_tied?
+    if (@positions.all? { |position| position == "X" || position == "O" }) && !game_won?
+      puts "Tie game."
+      return true
+    end
+    return false
   end
 
   def game_over?
@@ -110,7 +115,7 @@ class Player
   def initialize(name, symbol)
     @name = name
     @symbol = symbol
-    puts "#{name.capitalize} will be #{symbol}."
+    puts "#{name} will be #{symbol}."
   end
 end
 
