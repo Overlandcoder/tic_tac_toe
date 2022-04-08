@@ -51,11 +51,12 @@ attr_reader :current_player, :player1, :player2, :symbol
 
   def play_game
     until game_over?
+      switch_turns
       display_board
       solicit_move
       mark(@move)
-      switch_turns
     end
+    display_board
   end
 
   def solicit_move
@@ -76,10 +77,10 @@ attr_reader :current_player, :player1, :player2, :symbol
   def game_won?
     WINNING_COMBINATIONS.each do |combo|
       if (@positions[combo[0]] == "X" && @positions[combo[1]] == "X" && @positions[combo[2]] == "X")
-        puts "#{current_player.name} wins."
+        puts "\n#{current_player.name} wins."
         return true
       elsif (@positions[combo[0]] == "O" && @positions[combo[1]] == "O" && @positions[combo[2]] == "O")
-        puts "#{current_player.name} wins."
+        puts "\n#{current_player.name} wins."
         return true
       end
     end
@@ -88,7 +89,7 @@ attr_reader :current_player, :player1, :player2, :symbol
 
   def game_tied?
     if (@positions.all? { |position| position == "X" || position == "O" }) && !game_won?
-      puts "Tie game."
+      puts "\nTie game."
       return true
     end
     return false
@@ -111,7 +112,7 @@ attr_reader :current_player, :player1, :player2, :symbol
   end
 
   def display_board
-    puts " #{@positions[0]} | #{@positions[1]} | #{@positions[2]} "
+    puts "\n #{@positions[0]} | #{@positions[1]} | #{@positions[2]} "
     puts "-----------"
     puts " #{@positions[3]} | #{@positions[4]} | #{@positions[5]} "
     puts "-----------"
