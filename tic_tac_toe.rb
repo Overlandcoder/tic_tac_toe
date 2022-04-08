@@ -1,5 +1,5 @@
 class Game
-attr_reader :current_turn, :player1, :player2, :symbol
+attr_reader :current_player, :player1, :player2, :symbol
 
   WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
 
@@ -42,11 +42,11 @@ attr_reader :current_turn, :player1, :player2, :symbol
   end
 
   def first_turn
-    @current_turn = [player1, player2].sample
+    @current_player = [player1, player2].sample
   end
 
   def switch_turns
-    current_turn == player1 ? @current_turn = player2 : @current_turn = player1
+    current_player == player1 ? @current_player = player2 : @current_player = player1
   end
 
   def play_game
@@ -59,21 +59,21 @@ attr_reader :current_turn, :player1, :player2, :symbol
   end
 
   def solicit_move
-    puts "\n#{current_turn.name.capitalize}, it's your turn to make a move."
+    puts "\n#{current_player.name.capitalize}, it's your turn to make a move."
     @move = gets.chomp.to_i
   end
 
   def mark(position)
-    @positions[position] = current_turn.symbol
+    @positions[position] = current_player.symbol
   end
 
   def game_won?
     WINNING_COMBINATIONS.each do |combo|
       if (@positions[combo[0]] == "X" && @positions[combo[1]] == "X" && @positions[combo[2]] == "X")
-        puts "#{current_turn.name.capitalize} wins."
+        puts "#{current_player.name.capitalize} wins."
         return true
       elsif (@positions[combo[0]] == "O" && @positions[combo[1]] == "O" && @positions[combo[2]] == "O")
-        puts "#{current_turn.name.capitalize} wins."
+        puts "#{current_player.name.capitalize} wins."
         return true
       end
     end
