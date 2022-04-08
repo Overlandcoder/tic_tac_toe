@@ -12,21 +12,24 @@ attr_reader :current_player, :player1, :player2, :symbol
 
   def create_players
     choose_name(1)
+    @player1 = Player.new(@name)
     choose_symbol
-    @player1 = Player.new(@name, @symbol)
     choose_name(2)
+    @player2 = Player.new(@name)
     assign_symbol
-    @player2 = Player.new(@name, @symbol)
   end
 
   def choose_name(player_number)
-    puts "Player #{player_number}, enter your name:"
+    puts "\nPlayer #{player_number}, enter your name:"
     @name = gets.chomp.capitalize
   end
 
   def choose_symbol
-    puts "#{@name}, choose your symbol (X or O):"
+    puts "\n#{@name}, choose your symbol (X or O):"
     @symbol = gets.chomp.capitalize
+    player1.symbol = @symbol
+    puts "\n#{player1.name} will be #{@symbol}."
+
     if symbol != "X" && symbol != "O"
       puts "Invalid symbol."
       choose_symbol
@@ -34,11 +37,8 @@ attr_reader :current_player, :player1, :player2, :symbol
   end
 
   def assign_symbol
-    if player1.symbol == "X"
-      @symbol = "O"
-    else
-      @symbol = "X"
-    end
+    player1.symbol == "X" ? player2.symbol = "O" : player2.symbol = "X"
+    puts "\n#{player2.name} will be #{player2.symbol}."
   end
 
   def first_turn
@@ -54,7 +54,7 @@ attr_reader :current_player, :player1, :player2, :symbol
       display_board
       solicit_move
       mark(@move)
-      switch_turns unless game_over?
+      switch_turns
     end
   end
 
@@ -64,7 +64,12 @@ attr_reader :current_player, :player1, :player2, :symbol
   end
 
   def mark(position)
-    @positions[position] = current_player.symbol
+    if valid_position?
+      @positions[position] = current_player.symbol
+    else
+      puts "Invalid move, please try again."
+      mark(@move)
+    end
   end
 
   def game_won?
@@ -110,12 +115,11 @@ attr_reader :current_player, :player1, :player2, :symbol
 end
 
 class Player
-  attr_reader :name, :symbol
+  attr_reader :name
+  attr_accessor :symbol
 
-  def initialize(name, symbol)
+  def initialize(name)
     @name = name
-    @symbol = symbol
-    puts "#{name} will be #{symbol}."
   end
 end
 
