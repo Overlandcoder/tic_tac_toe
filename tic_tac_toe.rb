@@ -1,11 +1,14 @@
 class Game
+attr_reader :current_turn, :player1, :player2, :symbol
+
+  WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+
   def initialize
     @positions = [0, 1, 2, 3, 4, 5, 6, 7, 8]
     create_players
     play_game
+    first_turn
   end
-
-  WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
 
   def create_players
     choose_name(1)
@@ -27,7 +30,7 @@ class Game
   end
 
   def assign_symbol
-    if @player1.symbol == "X"
+    if player1.symbol == "X"
       @symbol = "O"
     else
       @symbol = "X"
@@ -35,7 +38,16 @@ class Game
   end
 
   def first_turn
-    puts [@player1.name, @player2.name].sample
+    @current_turn = [player1.name, player2.name].sample
+    puts current_turn
+  end
+
+  def switch_turns
+    if current_turn == player1.name
+      @current_turn = player2.name
+    elsif current_turn == player2.name
+      @current_turn = player1.name
+    end
   end
 
   def display_board
