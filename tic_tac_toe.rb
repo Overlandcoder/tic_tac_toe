@@ -4,7 +4,7 @@ attr_reader :current_player, :player1, :player2, :symbol
 WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
 
   def initialize
-    @positions = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    @positions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     display_board
     introduction
     create_players
@@ -14,7 +14,7 @@ WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [
 
   def introduction
     puts "\nLet's play Tic Tac Toe!"
-    puts "\nPlayers can make a move by entering a number between 0 and 8. Let's get started."
+    puts "\nPlayers can make a move by entering a number between 1 and 9. Let's get started."
   end
 
   def create_players
@@ -74,7 +74,7 @@ WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [
 
   def mark(position)
     if valid_move?
-      @positions[position] = current_player.symbol
+      @positions[position-1] = current_player.symbol
     else
       puts "Invalid move, please try again."
       solicit_move
@@ -85,10 +85,10 @@ WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [
   def game_won?
     WINNING_COMBINATIONS.each do |combo|
       if combo.all? { |position| @positions[position] == "X" }
-        puts "\n#{current_player.name} wins."
+        puts "\n#{current_player.name} wins!"
         return true
       elsif combo.all? { |position| @positions[position] == "O" }
-        puts "\n#{current_player.name} wins."
+        puts "\n#{current_player.name} wins!"
         return true
       end
     end
