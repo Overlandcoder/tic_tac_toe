@@ -104,14 +104,6 @@ attr_reader :current_player, :player1, :player2, :symbol
     return true if @positions[@move].is_a? Integer
   end
 
-  def winner
-    if player1.symbol == "X"
-      player1.name
-    elsif player2.symbol == "X"
-      player2.name
-    end
-  end
-
   def display_board
     puts "\n #{@positions[0]} | #{@positions[1]} | #{@positions[2]} "
     puts "-----------"
