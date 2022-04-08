@@ -6,8 +6,8 @@ attr_reader :current_turn, :player1, :player2, :symbol
   def initialize
     @positions = [0, 1, 2, 3, 4, 5, 6, 7, 8]
     create_players
-    play_game
     first_turn
+    play_game
   end
 
   def create_players
@@ -27,6 +27,10 @@ attr_reader :current_turn, :player1, :player2, :symbol
   def choose_symbol
     puts "#{@name.capitalize}, choose your symbol (X or O):"
     @symbol = gets.chomp.capitalize
+    if symbol != "X" && symbol != "O"
+      puts "Invalid symbol."
+      choose_symbol
+    end
   end
 
   def assign_symbol
@@ -38,15 +42,56 @@ attr_reader :current_turn, :player1, :player2, :symbol
   end
 
   def first_turn
-    @current_turn = [player1.name, player2.name].sample
-    puts current_turn
+    @current_turn = [player1, player2].sample
   end
 
   def switch_turns
-    if current_turn == player1.name
-      @current_turn = player2.name
-    elsif current_turn == player2.name
-      @current_turn = player1.name
+    current_turn == player1 ? @current_turn = player2 : @current_turn = player1
+  end
+
+  def play_game
+    until game_won?
+      display_board
+      solicit_move
+      mark(@move)
+      switch_turns unless game_over?
+    end
+  end
+
+  def solicit_move
+    puts "\n#{current_turn.name.capitalize}, it's your turn to make a move."
+    @move = gets.chomp.to_i
+  end
+
+  def mark(position)
+    @positions[position] = current_turn.symbol
+  end
+
+  def game_won?
+    WINNING_COMBINATIONS.each do |combo|
+      if (@positions[combo[0]] == "X" && @positions[combo[1]] == "X" && @positions[combo[2]] == "X")
+        puts "#{current_turn.name.capitalize} wins."
+        return true
+      elsif (@positions[combo[0]] == "O" && @positions[combo[1]] == "O" && @positions[combo[2]] == "O")
+        puts "#{current_turn.name.capitalize} wins."
+        return true
+      end
+    end
+    return false
+  end
+
+  def game_tied?
+  end
+
+  def game_over?
+    game_tied? || game_won?
+  end
+
+  def winner
+    if player1.symbol == "X"
+      player1.name
+    elsif player2.symbol == "X"
+      player2.name
     end
   end
 
@@ -56,41 +101,6 @@ attr_reader :current_turn, :player1, :player2, :symbol
     puts " #{@positions[3]} | #{@positions[4]} | #{@positions[5]} "
     puts "-----------"
     puts " #{@positions[6]} | #{@positions[7]} | #{@positions[8]} "
-  end
-
-  def play_game
-    until game_won?
-      display_board
-      solicit_move
-    end
-  end
-
-  def solicit_move
-    puts ""
-  end
-
-  def game_won?
-    WINNING_COMBINATIONS.each do |combo|
-      if (@positions[combo[0]] == "X" && @positions[combo[1]] == "X" && @positions[combo[2]] == "X")
-        puts "#{winner} wins."
-        return true
-      elsif (@positions[combo[0]] == "O" && @positions[combo[1]] == "O" && @positions[combo[2]] == "O")
-        puts "#{winner} wins."
-        return true
-      end
-    end
-  end
-
-  def game_tied?
-
-  end
-
-  def winner
-    if @player1.symbol == "X"
-      @player1.name
-    elsif @player2.symbol == "X"
-      @player2.name
-    end
   end
 end
 
