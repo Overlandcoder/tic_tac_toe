@@ -5,9 +5,16 @@ WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [
 
   def initialize
     @positions = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    display_board
+    introduction
     create_players
     randomize_first_turn
     play_game
+  end
+
+  def introduction
+    puts "\nLet's play Tic Tac Toe!"
+    puts "\nPlayers can make a move by entering a number between 0 and 8. Let's get started."
   end
 
   def create_players
@@ -61,7 +68,7 @@ WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [
   end
 
   def solicit_move
-    puts "\n#{current_player.name}, enter a number between 0 and 8 to make your move."
+    puts "\n#{current_player.name}, make your move."
     @move = gets.chomp.to_i
   end
 
