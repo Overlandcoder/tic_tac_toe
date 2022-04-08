@@ -64,10 +64,11 @@ attr_reader :current_player, :player1, :player2, :symbol
   end
 
   def mark(position)
-    if valid_position?
+    if valid_move?
       @positions[position] = current_player.symbol
     else
       puts "Invalid move, please try again."
+      solicit_move
       mark(@move)
     end
   end
@@ -95,6 +96,10 @@ attr_reader :current_player, :player1, :player2, :symbol
 
   def game_over?
     game_tied? || game_won?
+  end
+
+  def valid_move?
+    return true if @positions[@move].is_a? Integer
   end
 
   def winner
