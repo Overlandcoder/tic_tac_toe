@@ -11,11 +11,9 @@ WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [
   end
 
   def create_players
-    choose_name(1)
-    @player1 = Player.new(@name)
+    @player1 = Player.new(choose_name(1))
     choose_symbol
-    choose_name(2)
-    @player2 = Player.new(@name)
+    @player2 = Player.new(choose_name(2))
     assign_symbol
   end
 
