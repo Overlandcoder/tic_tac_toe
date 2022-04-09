@@ -38,14 +38,14 @@ class Game
   end
 
   def invalid_symbol?
-    return unless symbol != "X" && symbol != "O"
+    return unless symbol != 'X' && symbol != 'O'
 
-    puts "Invalid symbol."
+    puts 'Invalid symbol.'
     choose_symbol
   end
 
   def assign_symbol
-    player1.symbol == "X" ? player2.symbol = "O" : player2.symbol = "X"
+    player1.symbol == 'X' ? player2.symbol = 'O' : player2.symbol = 'X'
     puts "\n#{player2.name} will be #{player2.symbol}."
   end
 
@@ -54,12 +54,12 @@ class Game
   end
 
   def switch_turns
-    current_player == player1 ? @current_player = player2 : @current_player = player1
+    current_player == player1 ? player2 : player1
   end
 
   def play_game
     until game_over?
-      switch_turns
+      @current_player = switch_turns
       display_board
       solicit_move
       mark(@move)
@@ -76,7 +76,7 @@ class Game
     if valid_move?
       @positions[position - 1] = current_player.symbol
     else
-      puts "Invalid move, please try again."
+      puts 'Invalid move, please try again.'
       solicit_move
       mark(@move)
     end
@@ -84,10 +84,10 @@ class Game
 
   def game_won?
     WINNING_COMBINATIONS.each do |combo|
-      if combo.all? { |position| @positions[position] == "X" }
+      if combo.all? { |position| @positions[position] == 'X' }
         puts "\n#{current_player.name} wins!"
         return true
-      elsif combo.all? { |position| @positions[position] == "O" }
+      elsif combo.all? { |position| @positions[position] == 'O' }
         puts "\n#{current_player.name} wins!"
         return true
       end
@@ -96,7 +96,7 @@ class Game
   end
 
   def game_tied?
-    if (@positions.all? { |position| position == "X" || position == "O" }) && !game_won?
+    if (@positions.all? { |position| position == 'X' || position == 'O' }) && !game_won?
       puts "\nTie game."
       return true
     end
