@@ -64,6 +64,7 @@ class Game
       solicit_move
       mark(@move)
       puts "\n#{current_player.name} wins!" if game_won?
+      puts "\nTie game." if game_tied?
     end
     display_board
   end
@@ -90,11 +91,7 @@ class Game
   end
 
   def game_tied?
-    if (@positions.all? { |position| position == 'X' || position == 'O' }) && !game_won?
-      puts "\nTie game."
-      return true
-    end
-    false
+    (@positions.all? { |position| position == 'X' || position == 'O' }) && !game_won?
   end
 
   def game_over?
