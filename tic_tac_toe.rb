@@ -1,7 +1,7 @@
 class Game
-attr_reader :current_player, :player1, :player2, :symbol
+  attr_reader :current_player, :player1, :player2, :symbol
 
-WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+  WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]].freeze
 
   def initialize
     @positions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -38,10 +38,10 @@ WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [
   end
 
   def invalid_symbol?
-    if symbol != "X" && symbol != "O"
-      puts "Invalid symbol."
-      choose_symbol
-    end
+    return unless symbol != "X" && symbol != "O"
+
+    puts "Invalid symbol."
+    choose_symbol
   end
 
   def assign_symbol
@@ -74,7 +74,7 @@ WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [
 
   def mark(position)
     if valid_move?
-      @positions[position-1] = current_player.symbol
+      @positions[position - 1] = current_player.symbol
     else
       puts "Invalid move, please try again."
       solicit_move
@@ -92,7 +92,7 @@ WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [
         return true
       end
     end
-    return false
+    false
   end
 
   def game_tied?
@@ -100,7 +100,7 @@ WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [
       puts "\nTie game."
       return true
     end
-    return false
+    false
   end
 
   def game_over?
@@ -108,7 +108,7 @@ WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [
   end
 
   def valid_move?
-    return true if @positions[@move-1].is_a? Integer
+    return true if @positions[@move - 1].is_a? Integer
   end
 
   def display_board
@@ -129,4 +129,4 @@ class Player
   end
 end
 
-game = Game.new
+Game.new
