@@ -104,7 +104,7 @@ WINNING_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [
   end
 
   def game_over?
-    game_tied? || game_won?
+    game_won? || game_tied?
   end
 
   def valid_move?
