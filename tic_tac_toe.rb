@@ -63,6 +63,7 @@ class Game
       display_board
       solicit_move
       mark(@move)
+      puts "\n#{current_player.name} wins!" if game_won?
     end
     display_board
   end
@@ -83,16 +84,9 @@ class Game
   end
 
   def game_won?
-    WINNING_COMBINATIONS.each do |combo|
-      if combo.all? { |position| @positions[position] == 'X' }
-        puts "\n#{current_player.name} wins!"
-        return true
-      elsif combo.all? { |position| @positions[position] == 'O' }
-        puts "\n#{current_player.name} wins!"
-        return true
-      end
+    WINNING_COMBINATIONS.any? do |combination|
+      combination.all? { |position| @positions[position] == current_player.symbol }
     end
-    false
   end
 
   def game_tied?
