@@ -21,7 +21,8 @@ class Game
     @player1 = Player.new(choose_name(1))
     choose_symbol
     @player2 = Player.new(choose_name(2))
-    assign_symbol
+    player2.symbol = assign_symbol
+    puts "\n#{player2.name} will be #{player2.symbol}."
   end
 
   def choose_name(player_number)
@@ -45,8 +46,7 @@ class Game
   end
 
   def assign_symbol
-    player1.symbol == 'X' ? player2.symbol = 'O' : player2.symbol = 'X'
-    puts "\n#{player2.name} will be #{player2.symbol}."
+    player1.symbol == 'X' ? 'O' : 'X'
   end
 
   def randomize_first_turn
@@ -113,9 +113,9 @@ class Game
 
   def display_board
     puts "\n #{@positions[0]} | #{@positions[1]} | #{@positions[2]} "
-    puts "-----------"
+    puts '-----------'
     puts " #{@positions[3]} | #{@positions[4]} | #{@positions[5]} "
-    puts "-----------"
+    puts '-----------'
     puts " #{@positions[6]} | #{@positions[7]} | #{@positions[8]} "
   end
 end
