@@ -63,10 +63,10 @@ class Game
       display_board
       solicit_move
       mark(@move)
-      puts "\n#{current_player.name} wins!" if game_won?
-      puts "\nTie game." if game_tied?
     end
     display_board
+    puts "\n#{current_player.name} wins!" if game_won?
+    puts "\nTie game." if game_tied?
   end
 
   def solicit_move
