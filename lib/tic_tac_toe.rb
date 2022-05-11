@@ -34,13 +34,13 @@ class Game
   def choose_symbol
     puts "\n#{@name}, choose your symbol (X or O):"
     symbol = gets.chomp.capitalize
-    return symbol unless invalid_symbol?(symbol)
+    return symbol if valid_symbol?(symbol)
 
     choose_symbol
   end
 
-  def invalid_symbol?(symbol)
-    return unless symbol != 'X' && symbol != 'O'
+  def valid_symbol?(symbol)
+    return true if symbol == 'X' || symbol == 'O'
 
     puts 'Invalid symbol.'
   end
@@ -82,6 +82,20 @@ class Game
     @positions[position - 1] = current_player.symbol
   end
 
+  def game_over?
+    game_won? || game_tied?
+  end
+
+  def display_board
+    puts "\n #{@positions[0]} | #{@positions[1]} | #{@positions[2]} "
+    puts '-----------'
+    puts " #{@positions[3]} | #{@positions[4]} | #{@positions[5]} "
+    puts '-----------'
+    puts " #{@positions[6]} | #{@positions[7]} | #{@positions[8]} "
+  end
+
+  private
+
   def game_won?
     WINNING_COMBINATIONS.any? do |combination|
       combination.all? { |position| @positions[position] == 'X' } ||
@@ -93,23 +107,11 @@ class Game
     (@positions.all? { |position| position == 'X' || position == 'O' }) && !game_won?
   end
 
-  def game_over?
-    game_won?|| game_tied?
-  end
-
   def valid_move?(move)
     return true if @positions[move - 1].is_a? Integer
 
     puts 'Invalid move, please try again.'
-  end
-
-  def display_board
-    puts "\n #{@positions[0]} | #{@positions[1]} | #{@positions[2]} "
-    puts '-----------'
-    puts " #{@positions[3]} | #{@positions[4]} | #{@positions[5]} "
-    puts '-----------'
-    puts " #{@positions[6]} | #{@positions[7]} | #{@positions[8]} "
-  end
+  end 
 end
 
 class Player
@@ -121,4 +123,4 @@ class Player
   end
 end
 
-Game.new
+Game.new.play_game
