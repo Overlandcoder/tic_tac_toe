@@ -24,5 +24,18 @@ describe Game do
         expect(game).to be_game_won
       end
     end
+
+    context 'when game is tied' do
+      it 'is not game_won' do
+        game.instance_variable_set(:@positions, ['X', 'O', 'X', 'O', 'X', 'O', 'O', 'X', 'O'])
+        expect(game).not_to be_game_won
+      end
+    end
+
+    context 'when game is new' do
+      it 'is not game_won' do
+        expect(game).not_to be_game_won
+      end
+    end
   end
 end
