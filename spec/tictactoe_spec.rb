@@ -38,4 +38,27 @@ describe Game do
       end
     end
   end
+
+  describe '#game_tied?' do
+    context 'when all positions have been marked and game is not won' do
+      it 'is game_tied' do
+        game.instance_variable_set(:@positions, ['X', 'O', 'X', 'O', 'X', 'O', 'O', 'X', 'O'])
+        expect(game).to be_game_tied
+      end
+    end
+
+    context 'when game has been won' do
+      it 'is not game_tied' do
+        game.instance_variable_set(:@positions, ['X', 'X', 'X', 'O', 'X', 6, 7, 'O', 'O'])
+        expect(game).not_to be_game_tied
+      end
+    end
+
+    context 'when all positions have been marked and game has been won' do
+      it 'is not game_tied' do
+        game.instance_variable_set(:@positions, ['X', 'O', 'X', 'O', 'X', 'O', 'O', 'X', 'X'])
+        expect(game).not_to be_game_tied
+      end
+    end
+  end
 end
