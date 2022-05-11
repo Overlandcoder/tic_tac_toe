@@ -61,4 +61,28 @@ describe Game do
       end
     end
   end
+
+  describe '#game_over?' do
+    context 'when game is won' do
+      it 'is game_over' do
+        allow(game).to receive(:game_won?).and_return(true)
+        expect(game).to be_game_over
+      end
+    end
+
+    context 'when game is tied' do
+      it 'is game_over' do
+        allow(game).to receive(:game_tied?).and_return(true)
+        expect(game).to be_game_over
+      end
+    end
+  
+    context 'when game is not won or tied' do
+      it 'is not game_over' do
+        allow(game).to receive(:game_won?).and_return(false)
+        allow(game).to receive(:game_tied?).and_return(false)
+        expect(game).not_to be_game_over
+      end
+    end
+  end
 end
