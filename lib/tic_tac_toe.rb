@@ -83,17 +83,8 @@ class Game
   end
 
   def game_won?
-    triple_x? || triple_o?
-  end
-
-  def triple_x?
     WINNING_COMBINATIONS.any? do |combination|
-      combination.all? { |position| @positions[position] == 'X' }
-    end
-  end
-
-  def triple_o?
-    WINNING_COMBINATIONS.any? do |combination|
+      combination.all? { |position| @positions[position] == 'X' } ||
       combination.all? { |position| @positions[position] == 'O' }
     end
   end
