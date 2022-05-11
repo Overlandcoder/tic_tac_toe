@@ -5,8 +5,22 @@ describe Game do
 
   describe '#game_won?' do
     context 'when all elements in top row are X' do      
-      it 'returns true when game_won? for top row' do
-        game.instance_variable_set(:@positions, ['X', 'X', 'X', 4, 5, 6, 7, 8, 9])
+      it 'is game_won' do
+        game.instance_variable_set(:@positions, ['X', 'X', 'X', 'O', 'X', 6, 7, 'O', 'O'])
+        expect(game).to be_game_won
+      end
+    end
+
+    context 'when all elements in middle column are X' do
+      it 'is game_won' do
+        game.instance_variable_set(:@positions, ['O', 'X', 3, 4, 'X', 6, 'O', 'X', 'O'])
+        expect(game).to be_game_won
+      end
+    end
+
+    context 'when all elements in a diagonal are O' do
+      it 'is game_won' do
+        game.instance_variable_set(:@positions, ['O', 'X', 3, 4, 'O', 'X', 'X', 8, 'O'])
         expect(game).to be_game_won
       end
     end
