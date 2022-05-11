@@ -1,86 +1,46 @@
-require './lib/tic_tac_toe.rb'
+require './lib/game.rb'
 
 describe Game do
   subject(:game) { described_class.new }
 
-  describe '#game_won?' do
+  describe '#game_over?' do
     context 'when all elements in top row are X' do      
-      it 'is game_won' do
+      it 'is game_over' do
         game.instance_variable_set(:@positions, ['X', 'X', 'X', 'O', 'X', 6, 7, 'O', 'O'])
-        expect(game).to be_game_won
+        expect(game).to be_game_over
       end
     end
 
     context 'when all elements in middle column are X' do
-      it 'is game_won' do
+      it 'is game_over' do
         game.instance_variable_set(:@positions, ['O', 'X', 3, 4, 'X', 6, 'O', 'X', 'O'])
-        expect(game).to be_game_won
+        expect(game).to be_game_over
       end
     end
 
     context 'when all elements in a diagonal are O' do
-      it 'is game_won' do
+      it 'is game_over' do
         game.instance_variable_set(:@positions, ['O', 'X', 3, 4, 'O', 'X', 'X', 8, 'O'])
-        expect(game).to be_game_won
+        expect(game).to be_game_over
       end
     end
 
-    context 'when game is tied' do
-      it 'is not game_won' do
+    context 'when all positions have been marked and game is not won' do
+      it 'is game_over' do
         game.instance_variable_set(:@positions, ['X', 'O', 'X', 'O', 'X', 'O', 'O', 'X', 'O'])
-        expect(game).not_to be_game_won
+        expect(game).to be_game_over
       end
     end
 
     context 'when game is new' do
-      it 'is not game_won' do
-        expect(game).not_to be_game_won
-      end
-    end
-  end
-
-  describe '#game_tied?' do
-    context 'when all positions have been marked and game is not won' do
-      it 'is game_tied' do
-        game.instance_variable_set(:@positions, ['X', 'O', 'X', 'O', 'X', 'O', 'O', 'X', 'O'])
-        expect(game).to be_game_tied
-      end
-    end
-
-    context 'when game has been won' do
-      it 'is not game_tied' do
-        game.instance_variable_set(:@positions, ['X', 'X', 'X', 'O', 'X', 6, 7, 'O', 'O'])
-        expect(game).not_to be_game_tied
-      end
-    end
-
-    context 'when all positions have been marked and game has been won' do
-      it 'is not game_tied' do
-        game.instance_variable_set(:@positions, ['X', 'O', 'X', 'O', 'X', 'O', 'O', 'X', 'X'])
-        expect(game).not_to be_game_tied
-      end
-    end
-  end
-
-  describe '#game_over?' do
-    context 'when game is won' do
-      it 'is game_over' do
-        allow(game).to receive(:game_won?).and_return(true)
-        expect(game).to be_game_over
-      end
-    end
-
-    context 'when game is tied' do
-      it 'is game_over' do
-        allow(game).to receive(:game_tied?).and_return(true)
-        expect(game).to be_game_over
-      end
-    end
-  
-    context 'when game is not won or tied' do
       it 'is not game_over' do
-        allow(game).to receive(:game_won?).and_return(false)
-        allow(game).to receive(:game_tied?).and_return(false)
+        expect(game).not_to be_game_over
+      end
+    end
+
+    context 'when only a few positions have been marked' do
+      it 'is not game_over' do
+        game.instance_variable_set(:@positions, ['1', 'X', 3, 4, 5, 'O', 7, 'O', 9])
         expect(game).not_to be_game_over
       end
     end
