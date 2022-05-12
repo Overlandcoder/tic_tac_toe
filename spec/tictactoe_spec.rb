@@ -59,7 +59,7 @@ describe Game do
     end
   end
 
-  describe 'choose_name' do
+  describe '#choose_name' do
     before do
       allow(game).to receive(:puts)
       allow(game).to receive(:gets).and_return('John')
@@ -67,6 +67,53 @@ describe Game do
 
     it 'sets player name to John' do
       expect(game.choose_name(1)).to eq('John')
+    end
+  end
+
+  describe '#choose_symbol' do
+    context 'when user enters a valid input of X' do
+      before do
+        valid_symbol = 'X'
+        allow(game).to receive(:puts)
+        allow(game).to receive(:gets).and_return(valid_symbol)
+      end
+
+      it 'stops loop and does not display error message' do
+        error_message = 'Invalid symbol, please enter either X or O'
+        expect(game).not_to receive(:puts).with(error_message)
+        game.choose_symbol
+      end
+    end
+
+    context 'when user enters an invalid input once, then a valid input' do
+      before do
+        invalid_symbol = '%'
+        valid_symbol = 'O'
+        allow(game).to receive(:puts)
+        allow(game).to receive(:gets).and_return(invalid_symbol, valid_symbol)
+      end
+
+      it 'completes loop and displays error message once' do
+        error_message = 'Invalid symbol, please enter either X or O'
+        expect(game).to receive(:puts).with(error_message).once
+        game.choose_symbol
+      end
+    end
+
+    context 'when user enters invalid inputs twice, then a valid input' do
+      before do
+        phrase = 'Hello world!'
+        invalid_symbol = '%'
+        valid_symbol = 'X'
+        allow(game).to receive(:puts)
+        allow(game).to receive(:gets).and_return(phrase, invalid_symbol, valid_symbol)
+      end
+
+      it 'completes loop and displays error message twice' do
+        error_message = 'Invalid symbol, please enter either X or O'
+        expect(game).to receive(:puts).with(error_message).twice
+        game.choose_symbol
+      end
     end
   end
 end
