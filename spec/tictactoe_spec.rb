@@ -45,4 +45,28 @@ describe Game do
       end
     end
   end
+
+  describe '#create_players' do
+    before do
+      allow(game).to receive(:choose_name)
+      allow(game).to receive(:choose_symbol)
+      allow(game).to receive(:assign_symbol)
+    end
+
+    it 'creates two Players' do
+      expect(Player).to receive(:new).twice
+      game.create_players
+    end
+  end
+
+  describe 'choose_name' do
+    before do
+      allow(game).to receive(:puts)
+      allow(game).to receive(:gets).and_return('John')
+    end
+
+    it 'sets player name to John' do
+      expect(game.choose_name(1)).to eq('John')
+    end
+  end
 end
