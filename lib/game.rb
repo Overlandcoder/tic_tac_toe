@@ -13,8 +13,7 @@ class Game
     display_board
     intro_message
     create_players
-    introduce_player(player1)
-    introduce_player(player2)
+    introduce_players
     randomize_first_turn
   end
 
@@ -28,22 +27,23 @@ class Game
     gets.chomp.capitalize
   end
 
-  def introduce_player(name)
-    puts "\n#{name} will be #{name.symbol}."
+  def introduce_players
+    puts "\n#{player1.name} will be #{player1.symbol}."
+    puts "\n#{player2.name} will be #{player2.symbol}."
   end
 
   def choose_symbol
-    puts "\n#{player1.name}, choose your symbol (X or O):"
-    symbol = gets.chomp.capitalize
-    return symbol if valid_symbol?(symbol)
+    loop do
+      puts "\nChoose your symbol (X or O):"
+      symbol = gets.chomp.capitalize
+      return symbol if valid_symbol?(symbol)
 
-    choose_symbol
+      puts 'Invalid symbol, please enter either X or O'
+    end
   end
 
   def valid_symbol?(symbol)
-    return true if symbol == 'X' || symbol == 'O'
-
-    puts 'Invalid symbol.'
+    symbol == 'X' || symbol == 'O'
   end
 
   def assign_symbol
