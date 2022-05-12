@@ -1,3 +1,5 @@
+require_relative '../lib/player.rb'
+
 class Game
   attr_reader :current_player, :player1, :player2
 
@@ -11,28 +13,27 @@ class Game
     display_board
     intro_message
     create_players
+    introduce_player(player1)
+    introduce_player(player2)
     randomize_first_turn
-  end
-
-  def intro_message
-    puts "\nLet's play Tic Tac Toe!"
-    puts "\nPlayers can make a move by entering a number between 1 and 9. Let's get started."
   end
 
   def create_players
     @player1 = Player.new(choose_name(1), choose_symbol)
-    puts "\n#{player1.name} will be #{player1.symbol}."
     @player2 = Player.new(choose_name(2), assign_symbol)
-    puts "\n#{player2.name} will be #{player2.symbol}."
   end
 
   def choose_name(player_number)
     puts "\nPlayer #{player_number}, enter your name:"
-    @name = gets.chomp.capitalize
+    gets.chomp.capitalize
+  end
+
+  def introduce_player(name)
+    puts "\n#{name} will be #{name.symbol}."
   end
 
   def choose_symbol
-    puts "\n#{@name}, choose your symbol (X or O):"
+    puts "\n#{player1.name}, choose your symbol (X or O):"
     symbol = gets.chomp.capitalize
     return symbol if valid_symbol?(symbol)
 
@@ -47,6 +48,10 @@ class Game
 
   def assign_symbol
     player1.symbol == 'X' ? 'O' : 'X'
+  end
+
+  def randomize_first_turn
+    @current_player = [player1, player2].sample
   end
 
   def play_game
@@ -78,6 +83,11 @@ class Game
     game_won? || game_tied?
   end
 
+  def intro_message
+    puts "\nLet's play Tic Tac Toe!"
+    puts "\nPlayers can make a move by entering a number between 1 and 9. Let's get started."
+  end
+
   def display_board
     puts "\n #{@positions[0]} | #{@positions[1]} | #{@positions[2]} "
     puts '-----------'
@@ -105,13 +115,9 @@ class Game
     puts 'Invalid move, please try again.'
   end
 
-  def randomize_first_turn
-    @current_player = [player1, player2].sample
-  end
-
   def switch_turns
     current_player == player1 ? player2 : player1
   end
 end
 
-Game.new.play_game
+Game.new
