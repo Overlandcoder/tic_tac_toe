@@ -116,4 +116,40 @@ describe Game do
       end
     end
   end
+
+  describe '#valid_symbol?' do
+    context 'when given a valid input as argument' do
+      it 'returns true' do
+        symbol = 'X'
+        expect(game.valid_symbol?(symbol)).to be true
+      end
+    end
+
+    context 'when given an invalid input as argument' do
+      it 'returns false' do
+        invalid_symbol = 'ab'
+        expect(game.valid_symbol?(invalid_symbol)).to be false
+      end
+    end
+  end
+
+  describe '#assign_symbol' do
+    context 'when player1 symbol is X' do
+      let(:player1) { double(Player, name: 'John', symbol: 'X') }
+
+      it 'returns O when player1 symbol is X' do
+        game.instance_variable_set(:@player1, player1)
+        expect(game.assign_symbol).to eq('O')
+      end
+    end
+
+    context 'when player2 symbol is O' do
+      let(:player1) { double(Player, name: 'John', symbol: 'O') }
+
+      it 'returns X when player1 symbol is O' do
+        game.instance_variable_set(:@player1, player1)
+        expect(game.assign_symbol).to eq('X')
+      end
+    end
+  end
 end
