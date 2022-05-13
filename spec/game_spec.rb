@@ -212,15 +212,13 @@ describe Game do
     let(:player1) { double(Player, name: 'John', symbol: 'X') }
 
     before do
-      allow(game).to receive(:switch_turns).and_return(player1)
+      allow(game).to receive(:current_player).and_return(player1)
     end
 
     it 'marks a position with X' do
       positions = game.instance_variable_get(:@positions)
-      position = 2
-      expect(positions[1]).to eq('X')
-      game.mark(position)
-      puts game.current_player.symbol
+      expect(positions[1]).to eq(2)
+      game.mark(2)
     end
   end
 end
