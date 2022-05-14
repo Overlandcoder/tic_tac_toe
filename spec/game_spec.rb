@@ -164,7 +164,7 @@ describe Game do
         allow(game).to receive(:puts)
       end
 
-      it 'calls switch_turns and mark(solicit_move) once' do
+      it 'calls #switch_turns once' do
         expect(game).to receive(:switch_turns).once
         game.play_game
       end
@@ -175,17 +175,17 @@ describe Game do
         allow(game).to receive(:mark)
       end
 
-      it 'calls display_board once' do
+      it 'calls #display_board once' do
         expect(game).to receive(:display_board).twice
         game.play_game
       end
 
-      it 'calls mark once' do
+      it 'calls #mark once' do
         expect(game).to receive(:mark).once
         game.play_game
       end
 
-      it 'calls solicit_move once' do
+      it 'calls #solicit_move once' do
         expect(game).to receive(:solicit_move).once
         game.play_game
       end
@@ -198,10 +198,28 @@ describe Game do
         allow(game).to receive(:puts)
       end
 
-      it 'calls switch_turns and display_board 5 times, and mark(solicit_move) six times' do
+      it 'calls #switch_turns five times' do
         expect(game).to receive(:switch_turns).exactly(5).times
+        game.play_game
+      end
+
+      before do
+        allow(game).to receive(:solicit_move)
+        allow(game).to receive(:switch_turns)
+        allow(game).to receive(:mark)
+      end
+
+      it 'calls #display_board six times' do
         expect(game).to receive(:display_board).exactly(6).times
+        game.play_game
+      end
+
+      it 'calls #mark five times' do
         expect(game).to receive(:mark).exactly(5).times
+        game.play_game
+      end
+
+      it 'calls #solicit_move five times' do
         expect(game).to receive(:solicit_move).exactly(5).times
         game.play_game
       end
@@ -240,7 +258,6 @@ describe Game do
 
     context 'when given a number not included on the board as input' do
       before do
-        allow(game).to receive(:puts)
         allow(game).to receive(:current_player).and_return(player1)
         allow(game).to receive(:gets).and_return("100\n")
       end
@@ -253,7 +270,6 @@ describe Game do
 
     context 'when given a letter as input' do
       before do
-        allow(game).to receive(:puts)
         allow(game).to receive(:current_player).and_return(player1)
         allow(game).to receive(:gets).and_return("A\n")
       end
