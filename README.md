@@ -11,6 +11,7 @@ This is the first OOP-based Ruby project from The Odin Project's Full Stack Ruby
 This is an excellent opportunity to put my newly learned OOP knowledge to the test. The project won't be easy, but the process of building this game will lead to a much better understanding of Ruby and OOP.
 
 ## Technologies used
+<p align="left"> <a href="https://www.ruby-lang.org/en/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/ruby/ruby-original.svg" alt="ruby" width="40" height="40"/> </a> </p>
 ### Ruby
 ### RSpec
 
