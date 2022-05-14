@@ -50,10 +50,6 @@ class Game
     player1.symbol == 'X' ? 'O' : 'X'
   end
 
-  def randomize_first_turn
-    @current_player = [player1, player2].sample
-  end
-
   def play_game
     setup
 
@@ -62,9 +58,15 @@ class Game
       display_board
       mark(solicit_move)
     end
-    display_board
-    puts "\n#{current_player.name} wins!" if game_won?
-    puts "\nTie game." if game_tied?
+    conclusion
+  end
+
+  def game_over?
+    game_won? || game_tied?
+  end
+
+  def switch_turns
+    current_player == player1 ? player2 : player1
   end
 
   def solicit_move
@@ -79,8 +81,17 @@ class Game
     @positions[position - 1] = current_player.symbol
   end
 
-  def game_over?
-    game_won? || game_tied?
+  def conclusion
+    display_board
+    display_winner
+  end
+
+  def display_winner
+    if game_won?
+      puts "\n#{current_player.name} wins!"
+    else
+      puts "\nTie game."
+    end
   end
 
   def intro_message
@@ -97,6 +108,10 @@ class Game
   end
 
   private
+  
+  def randomize_first_turn
+    @current_player = [player1, player2].sample
+  end
 
   def game_won?
     WINNING_COMBINATIONS.any? do |combination|
@@ -110,13 +125,9 @@ class Game
   end
 
   def valid_move?(move)
-    return true if @positions[move - 1].is_a? Integer
+    return true if move.is_a?(Integer) && @positions.any? { |position| position == move }
 
     puts 'Invalid move, please try again.'
-  end
-
-  def switch_turns
-    current_player == player1 ? player2 : player1
   end
 end
 
