@@ -221,4 +221,47 @@ describe Game do
       game.mark(2)
     end
   end
+
+  describe '#solicit_move' do
+    let(:player1) { double(Player, name: 'John', symbol: 'X') }
+
+    context 'when given a valid move as input' do
+      before do
+        allow(game).to receive(:puts)
+        allow(game).to receive(:current_player).and_return(player1)
+        allow(game).to receive(:gets).and_return("1\n")
+      end
+      
+      it 'returns the input' do
+        expect(game.solicit_move).to eq(1)
+        game.solicit_move
+      end
+    end
+
+    context 'when given a number not included on the board as input' do
+      before do
+        allow(game).to receive(:puts)
+        allow(game).to receive(:current_player).and_return(player1)
+        allow(game).to receive(:gets).and_return("100\n")
+      end
+
+      it 'calls #solicit_move again' do
+        expect(game).to receive(:solicit_move).once
+        game.solicit_move
+      end
+    end
+
+    context 'when given a letter as input' do
+      before do
+        allow(game).to receive(:puts)
+        allow(game).to receive(:current_player).and_return(player1)
+        allow(game).to receive(:gets).and_return("A\n")
+      end
+
+      it 'calls #solicit_move again' do
+        expect(game).to receive(:solicit_move).once
+        game.solicit_move
+      end
+    end
+  end
 end
