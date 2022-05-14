@@ -77,6 +77,12 @@ class Game
     solicit_move
   end
 
+  def valid_move?(move)
+    return true if move.is_a?(Integer) && @positions.any? { |position| position == move }
+
+    puts 'Invalid move, please try again.'
+  end
+
   def mark(position)
     @positions[position - 1] = current_player.symbol
   end
@@ -122,12 +128,6 @@ class Game
 
   def game_tied?
     (@positions.all? { |position| position == 'X' || position == 'O' }) && !game_won?
-  end
-
-  def valid_move?(move)
-    return true if move.is_a?(Integer) && @positions.any? { |position| position == move }
-
-    puts 'Invalid move, please try again.'
   end
 end
 
