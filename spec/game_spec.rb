@@ -247,19 +247,22 @@ describe Game do
       before do
         allow(game).to receive(:puts)
         allow(game).to receive(:current_player).and_return(player1)
-        allow(game).to receive(:gets).and_return("1\n")
+        allow(game).to receive(:gets).and_return('1')
       end
       
       it 'returns the input' do
         expect(game.solicit_move).to eq(1)
-        game.solicit_move
+      end
+
+      it 'does not call #solicit_move again' do
+        expect(game).not_to receive(:solicit_move)
       end
     end
 
     context 'when given a number not included on the board as input' do
       before do
         allow(game).to receive(:current_player).and_return(player1)
-        allow(game).to receive(:gets).and_return("100\n")
+        allow(game).to receive(:gets).and_return('100')
       end
 
       it 'calls #solicit_move again' do
@@ -271,12 +274,40 @@ describe Game do
     context 'when given a letter as input' do
       before do
         allow(game).to receive(:current_player).and_return(player1)
-        allow(game).to receive(:gets).and_return("A\n")
+        allow(game).to receive(:gets).and_return('A')
       end
 
       it 'calls #solicit_move again' do
         expect(game).to receive(:solicit_move).once
         game.solicit_move
+      end
+    end
+  end
+
+  describe '#valid_move?' do
+    context 'when given a valid move as input' do
+      it 'returns true' do
+        expect(game.valid_move?(1)).to be true
+      end
+    end
+
+    context 'when given a number not included on the board as input' do
+      before do
+        allow(game).to receive(:puts)
+      end
+
+      it 'returns false' do
+        expect(game.valid_move?(100)).not_to be true
+      end
+    end
+
+    context 'when given a word as input' do
+      before do
+        allow(game).to receive(:puts)
+      end
+
+      it 'returns false' do
+        expect(game.valid_move?('word')).not_to be true
       end
     end
   end
