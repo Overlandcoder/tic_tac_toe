@@ -1,7 +1,7 @@
 # Tic-Tac-Toe
 This is the first OOP-based Ruby project from The Odin Project's Full Stack Ruby on Rails curriculum
 
-![alt text](game-sample.png?raw=true "screenshot of tic-tac-toe gameplay")
+![alt text](img/game-sample.png?raw=true "screenshot of tic-tac-toe gameplay")
 
 ## Project objectives
 
