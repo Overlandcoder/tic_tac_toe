@@ -1,19 +1,21 @@
 # Tic-Tac-Toe
 This is the first OOP-based Ruby project from The Odin Project's Full Stack Ruby on Rails curriculum
 
-## Project objective
+![alt text](game-sample.png?raw=true "screenshot of tic-tac-toe gameplay")
 
-1. Build a command line tic-tac-toe game where two human players can play against each other.
-2. Write tests for the tic-tac-toe project
+## Project objectives
+
+1. Build a command line tic-tac-toe game where two human players can play against each other
+2. Write tests for the tic-tac-toe game
 
 ## Motivation for this project
 
 This is an excellent opportunity to put my newly learned OOP knowledge to the test. The project won't be easy, but the process of building this game will lead to a much better understanding of Ruby and OOP.
 
 ## Technologies used
-<p align="left"> <a href="https://www.ruby-lang.org/en/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/ruby/ruby-original.svg" alt="ruby" width="40" height="40"/> </a> </p>
-### Ruby
-### RSpec
+<p align="left">
+<a href="https://www.ruby-lang.org/en/" target="_blank" rel="noreferrer"> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ruby/ruby-original.svg" alt="ruby" width="40" height="40"/> </a>
+<a href="https://rspec.info/" target="_blank" rel="noreferrer"> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rspec/rspec-original.svg" alt="rspec" width="40" height="40"/> </a> </p>
 
 ## Overview of the game
 1. To begin, the board and the instructions for making moves are displayed
