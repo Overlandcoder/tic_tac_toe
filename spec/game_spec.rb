@@ -155,17 +155,20 @@ describe Game do
 
   describe '#play_game' do
     let(:player1) { double(Player, name: 'John', symbol: 'X') }
-    let(:player2) { double(Player, name: 'Jane', symbol: 'O') }
 
     context 'when game_over? is false five times' do
       before do
         allow(game).to receive(:setup)
         allow(game).to receive(:game_over?).and_return(false, false, false, false, false, true)
         allow(game).to receive(:puts)
-        allow(game).to receive(:solicit_move).and_return(1)
+        allow(game).to receive(:current_player).and_return(player1)
+        allow(game).to receive(:valid_move?).and_return(true)
         game.instance_variable_set(:@player1, player1)
-        game.instance_variable_set(:@player2, player2)
-        game.instance_variable_set(:@current_player, player1)
+      end
+
+      it 'calls #switch_turns five times' do
+        expect(game).to receive(:switch_turns).exactly(5).times
+        game.play_game
       end
 
       it 'calls #display_board six times' do
@@ -173,14 +176,14 @@ describe Game do
         game.play_game
       end
 
-      it 'calls #mark five times' do
-        expect(game).to receive(:mark).exactly(5).times
+      it 'calls #solicit_move five times' do
+        allow(game).to receive(:mark)
+        expect(game).to receive(:solicit_move).exactly(5).times
         game.play_game
       end
 
-      it 'calls #switch_turns five times' do
-        allow(game).to receive(:current_player).and_return(player1)
-        expect(game).to receive(:switch_turns).exactly(5).times
+      it 'calls #mark five times' do
+        expect(game).to receive(:mark).exactly(5).times
         game.play_game
       end
 
